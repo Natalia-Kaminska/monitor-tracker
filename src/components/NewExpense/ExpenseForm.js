@@ -18,17 +18,19 @@ const ExpenseForm = (props) => {
   }
 
   const amountChangeHandler = (event) => {
-    setEnteredData({
-      ...enteredData,
+    setEnteredData((prevState) => {
+      return {
+      ...prevState,
       enteredAmount: event.target.value
-    })
+    }})
   }
 
   const dateChangeHandler = (event) => {
-    setEnteredData({
-      ...enteredData,
+    setEnteredData((prevState) => {
+      return {
+      ...prevState,
       enteredDate: event.target.value
-    })
+    }})
   }
 
   const onSubmitHandler = (event) => {

@@ -9,6 +9,8 @@ const ExpenseForm = (props) => {
     enteredDate: ''
   })
 
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
   const titleChangeHandler = (event) => {
     setEnteredData((prevState) => {
       return {
@@ -38,7 +40,7 @@ const ExpenseForm = (props) => {
 
     const expenseData = {
       title: enteredData.enteredTitle,
-      amount: enteredData.enteredAmount,
+      amount: +enteredData.enteredAmount,
       date: new Date(enteredData.enteredDate)
     }
 
@@ -51,9 +53,14 @@ const ExpenseForm = (props) => {
     })
   }
 
+  const toggleNewExpenceForm = () => {
+    isFormVisible ? setIsFormVisible(false) : setIsFormVisible(true);
+  }
+
   return (
     <form onSubmit={onSubmitHandler}>
-      <div className='new-expense__controls'>
+      {isFormVisible && (
+        <div className='new-expense__controls'>
         <div className='new-expense__control'>
           <label>Title</label>
           <input type='text' value={enteredData.enteredTitle} onChange={titleChangeHandler}/>
@@ -67,8 +74,12 @@ const ExpenseForm = (props) => {
           <input type='date' value={enteredData.enteredDate} onChange={dateChangeHandler}/>
         </div>
       </div>
-      <div className='new-expense__actions'>
-        <button type="submit">Add Expense</button>
+      )}
+      <div className={isFormVisible ? 'new-expense__actions' : ''}>
+        {isFormVisible && (
+        <button onClick={toggleNewExpenceForm} type='button'>Cancel</button>
+        )}
+        <button onClick={toggleNewExpenceForm} type="submit">{isFormVisible ? 'Add Expense' : 'Add New Expense' }</button>
       </div>
     </form>
   )
